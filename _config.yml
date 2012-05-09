@@ -1,0 +1,15 @@
+auto: true
+pygments: true
+
+author:
+  name: Matt Sain
+  email: matt@insaindesign.com
+  gravatar: 57439c51a503176982dee928ca3659ab
+  twitter: insaindesign
+
+description: 'Ramblings of a developer, designer and child'
+
+github: insaindesign
+feedburner: insaindesign
+disqus: insaindesign
+analytics: 'UA-19014116-1'
