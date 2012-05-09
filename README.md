@@ -17,13 +17,11 @@ Load any script/s inline and asynchronously then run the dependant code.
 
 ### Example
 
-{% highlight html %}
-<!-- html code -->
-<div class="im-a-div" data-needy="fill-me-with-content"></div>
-<script src="big-ego.js"></script>
-<script src="needy.js"></script>
-<p></p>
-{% endhighlight %}
+    <!-- html code -->
+    <div class="im-a-div" data-needy="fill-me-with-content"></div>
+    <script src="big-ego.js"></script>
+    <script src="needy.js"></script>
+    <p></p>
     
 This above would put a big pause button on your page load, as it would need to fetch `big-ego.js` and parse it, once that is done, it does the same for `needy.js`, once that is done, it can continue parsing the page.
 
@@ -62,47 +60,45 @@ Which means you can happy load your non blocking javascript quickly without need
 
 Useful if you're scripts need to be loaded in order (as they have dependencies on each other).
 
-{% highlight html %}
-<script src="prescript.js">
-    {
-        "load" : ["file.js", "another"],
-        "sequential" : 1,
-        "root" : "http://my.domain.com/js/", // optional
-        "run" : function () {
-            console.warn("loaded 2 files one after the other");
+    <script src="prescript.js">
+        {
+            "load" : ["file.js", "another"],
+            "sequential" : 1,
+            "root" : "http://my.domain.com/js/", // optional
+            "run" : function () {
+                console.warn("loaded 2 files one after the other");
+            }
         }
-    }
-</script>
-{% endhighlight %}
+    </script>
+
 
 ### Load individual files in parallel (FASTER)
 
 Will load all your requirements in parallel, which is as fast as the browser will allow. Only works if the scripts you're loading are not dependant on each other.
 
-{% highlight html %}
-<script src="prescript.js">
-    {
-        "load" : ["file.js", "another"],
-        "root" : "http://my.domain.com/js/", //optional
-        "run" : function () {
-            console.warn("loaded 2 file in parallel");
+
+    <script src="prescript.js">
+        {
+            "load" : ["file.js", "another"],
+            "root" : "http://my.domain.com/js/", //optional
+            "run" : function () {
+                console.warn("loaded 2 file in parallel");
+            }
         }
-    }
-</script>
-{% endhighlight %}
+    </script>
+
 
 ### Load combined files (FASTEREST)
 
 The fastest way to load multiple files is to use a combination loader (if you have access to one). This will load all your files, in one request.
 
-{% highlight html %}
-<script src="prescript.js">
-    {
-        "load" : ["file.js", "another"],
-        "combo" : "http://my.domain.com/js/",
-        "run" : function () {
-            console.warn("loaded 2 files with one request");
+
+    <script src="prescript.js">
+        {
+            "load" : ["file.js", "another"],
+            "combo" : "http://my.domain.com/js/",
+            "run" : function () {
+                console.warn("loaded 2 files with one request");
+            }
         }
-    }
-</script>
-{% endhighlight %}
+    </script>
