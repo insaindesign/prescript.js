@@ -4,53 +4,50 @@
     
     Load any script asynchronously then run the dependant js
 
-    ## Usage
-    
-    ### Load indevidual files squentially 
-    
-    Useful if you're scripts need to be loaded in order
-    
-        <script src="prescript.js">
-            {
-                "load" : ["file.js", "another"],
-                "sequential" : 1,
-                "root" : "http://my.domain.com/js/",
-                "run" : function () {
-                    console.warn("loaded 2");
-                }
+    ### Load individual files sequentially (FAST) 
+
+    Useful if you're scripts need to be loaded in order (as they have dependencies on each other).
+
+    <script src="prescript.js">
+        {
+            "load" : ["file.js", "another"],
+            "sequential" : 1,
+            "root" : "http://my.domain.com/js/", // optional
+            "run" : function () {
+                console.warn("loaded 2 files one after the other");
             }
-        </script>
-    
-    
-    ### Load indevidual files in parallel
-    
-    The fastest way to load indevidual files. Only works if the scripts you're 
-    loading are mutually exclusive.
-    
-        <script src="prescript.js">
-            {
-                "load" : ["file.js", "another"],
-                "root" : "http://my.domain.com/js/",
-                "run" : function () {
-                    console.warn("loaded 2");
-                }
+        }
+    </script>
+
+
+    ### Load individual files in parallel (FASTER)
+
+    Will load all your requirements in parallel, which is as fast as the browser will allow. Only works if the scripts you're loading are not dependant on each other.
+
+    <script src="prescript.js">
+        {
+            "load" : ["file.js", "another"],
+            "root" : "http://my.domain.com/js/", //optional
+            "run" : function () {
+                console.warn("loaded 2 file in parallel");
             }
-        </script>
-    
-    
-    ### Load combined files
-    
-    The fastest way to load multiple files at once.
-    
-        <script src="prescript.js">
-            {
-                "load" : ["file.js", "another"],
-                "combo" : "http://my.domain.com/js/",
-                "run" : function () {
-                    console.warn("loaded 2");
-                }
+        }
+    </script>
+
+
+    ### Load combined files (FASTEREST)
+
+    The fastest way to load multiple files is to use a combination loader (if you have access to one). This will load all your files, in one request.
+
+    <script src="prescript.js">
+        {
+            "load" : ["file.js", "another"],
+            "combo" : "http://my.domain.com/js/",
+            "run" : function () {
+                console.warn("loaded 2 files with one request");
             }
-        </script>
+        }
+    </script>
 */
 
 
@@ -62,7 +59,7 @@
         placeholder = document.getElementsByTagName("head")[0],
         scriptTags = document.getElementsByTagName("script"),
         thisScript = scriptTags[scriptTags.length - 1],
-        content = thisScript.text;
+        config = thisScript.text;
 
     // 
     //  addScript
@@ -188,7 +185,8 @@
     
     //yeah i'm aware how shit using eval is
     try {
-        parse(eval("(" + content +")"));
+        config = eval("(" + config +")");
+        if (config) parse(config);
     } catch (ex) {
         console.error(ex);
     }
